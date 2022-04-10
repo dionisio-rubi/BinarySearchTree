@@ -1,3 +1,5 @@
+all: tree
+
 tree: main.o
 	g++ -o tree main.o
 
