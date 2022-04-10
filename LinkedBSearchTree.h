@@ -8,12 +8,14 @@ template<class ItemType>
 class LinkedBSearchTree: public TreeInterface<ItemType> {
     private:
         LinkedBinaryTreeNode<ItemType>* rootPtr;
+        int height;
+        int numberOfNodes;
         
     protected:
         LinkedBinaryTreeNode<ItemType>* placeNode(LinkedBinaryTreeNode<ItemType>* subTreePtr, LinkedBinaryTreeNode<ItemType>* newNodePtr);
-        LinkedBinaryTreeNode<ItemType>* removeValue(LinkedBinaryTreeNode<ItemType>* subTreePtr, const ItemType target, bool& isSuccessful) override;
+        LinkedBinaryTreeNode<ItemType>* removeValue(LinkedBinaryTreeNode<ItemType>* subTreePtr, const ItemType target, bool& isSuccessful);
         LinkedBinaryTreeNode<ItemType>* removeNode(LinkedBinaryTreeNode<ItemType>* nodePtr);
-        LinkedBinaryTreeNode<ItemType>* removeLeftmostNode(LinkedBinaryTreeNode<ItemType>* inorderSuccessor);
+        LinkedBinaryTreeNode<ItemType>* removeLeftmostNode(LinkedBinaryTreeNode<ItemType>* nodePtr, LinkedBinaryTreeNode<ItemType>* inorderSuccessor);
         LinkedBinaryTreeNode<ItemType>* findNode(LinkedBinaryTreeNode<ItemType>* treePtr, const ItemType& target) const;
 
     public:
@@ -27,9 +29,9 @@ class LinkedBSearchTree: public TreeInterface<ItemType> {
         void clear();
         ItemType getEntry(const ItemType& anEntry) const;
         bool contains(const ItemType& anEntry) const;
-        void preorderTraverse(void visit(ItemType&)) const;
-        void inorderTraverse(void visit(ItemType&)) const;
-        void postorderTraverse(void visit(ItemType&)) const;
+        void preorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
+        void inorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
+        void postorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
         ~LinkedBSearchTree() { }
 };
 
