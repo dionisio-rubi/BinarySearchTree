@@ -7,4 +7,4 @@ main.o: main.cpp LinkedBinaryTreeNode.h LinkedBSearchTree.h
 	g++ -c main.cpp
 
 clean:
-	rm *.o *.txt tree
+	rm *.o tree

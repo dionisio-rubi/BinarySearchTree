@@ -73,7 +73,7 @@ LinkedBinaryTreeNode<ItemType>* LinkedBSearchTree<ItemType>::findNode(LinkedBina
 
 
 template <class ItemType>
-LinkedBSearchTree<ItemType>::LinkedBSearchTree() : rootPtr(nullptr), height(-1), numberOfNodes(0) { }
+LinkedBSearchTree<ItemType>::LinkedBSearchTree() : rootPtr(nullptr), numberOfNodes(0) { }
 
 template <class ItemType>
 bool LinkedBSearchTree<ItemType>::isEmpty() const{
@@ -202,11 +202,6 @@ void LinkedBSearchTree<ItemType>::postorderTraverse(LinkedBinaryTreeNode<ItemTyp
     }
     ItemType i = treePtr->getItem();
     visit(i);
-}
-
-template <class ItemType>
-void LinkedBSearchTree<ItemType>::postorderTraverse(void visit(ItemType&)) const{
-    postorderTraverse(rootPtr, visit);
 }
 
 template <class ItemType>

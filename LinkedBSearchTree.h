@@ -8,7 +8,6 @@ template<class ItemType>
 class LinkedBSearchTree: public TreeInterface<ItemType> {
     private:
         LinkedBinaryTreeNode<ItemType>* rootPtr;
-        int height;
         int numberOfNodes;
         
     protected:
@@ -19,7 +18,6 @@ class LinkedBSearchTree: public TreeInterface<ItemType> {
         LinkedBinaryTreeNode<ItemType>* findNode(LinkedBinaryTreeNode<ItemType>* treePtr, const ItemType& target) const;
 
         int getHeight(LinkedBinaryTreeNode<ItemType>* ptr) const;
-        void postorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
     public:
         LinkedBSearchTree();
         bool isEmpty() const;
@@ -35,8 +33,7 @@ class LinkedBSearchTree: public TreeInterface<ItemType> {
         
         void preorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
         void inorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
-        // void postorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
-        void postorderTraverse(void visit(ItemType&)) const;
+        void postorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
         ~LinkedBSearchTree();
 };
 
