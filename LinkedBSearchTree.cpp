@@ -124,7 +124,7 @@ LinkedBinaryTreeNode<ItemType>* LinkedBSearchTree<ItemType>::getRootPtr() const{
 
 template <class ItemType>
 bool LinkedBSearchTree<ItemType>::add(const ItemType& newData){
-    if(!contains(newData)){
+    if(!contains(newData)){ // makes sure that there are no repeats of the same number
         LinkedBinaryTreeNode<ItemType>* newNodePtr = new LinkedBinaryTreeNode<ItemType>(newData);
         rootPtr = placeNode(rootPtr, newNodePtr);
         numberOfNodes++; // increases cout of number of nodes
