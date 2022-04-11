@@ -1,11 +1,15 @@
 #include "LinkedBinaryTreeNode.h"
 
 template <class ItemType>
-LinkedBinaryTreeNode<ItemType>::LinkedBinaryTreeNode() : leftChildPtr(nullptr), rightChildPtr(nullptr){ }
+LinkedBinaryTreeNode<ItemType>::LinkedBinaryTreeNode() : item(ItemType()), leftChildPtr(nullptr), rightChildPtr(nullptr){ }
 
 template <class ItemType>
 LinkedBinaryTreeNode<ItemType>::LinkedBinaryTreeNode(const ItemType& newData, LinkedBinaryTreeNode<ItemType>* left, LinkedBinaryTreeNode<ItemType>* right) :
 item(newData), leftChildPtr(left), rightChildPtr(right){ }
+
+template <class ItemType>
+LinkedBinaryTreeNode<ItemType>::LinkedBinaryTreeNode(const ItemType& newData) :
+item(newData), leftChildPtr(nullptr), rightChildPtr(nullptr){ }
         
 template <class ItemType>
 void LinkedBinaryTreeNode<ItemType>::setItem(const ItemType& newData){

@@ -16,7 +16,6 @@ template <class ItemType>
 LinkedBinaryTreeNode<ItemType>* LinkedBSearchTree<ItemType>::removeValue(LinkedBinaryTreeNode<ItemType>* subTreePtr, const ItemType target, bool& isSuccessful){
     if(subTreePtr == nullptr){
         isSuccessful = false;
-        return nullptr;
     } else if(subTreePtr->getItem() == target){
         subTreePtr = removeNode(subTreePtr);
         isSuccessful = true;
@@ -30,34 +29,34 @@ LinkedBinaryTreeNode<ItemType>* LinkedBSearchTree<ItemType>::removeValue(LinkedB
     
 template <class ItemType>
 LinkedBinaryTreeNode<ItemType>* LinkedBSearchTree<ItemType>::removeNode(LinkedBinaryTreeNode<ItemType>* nodePtr){
+    LinkedBinaryTreeNode<ItemType>* nodeToConnectPtr;
     if(nodePtr->isLeaf()){
         delete nodePtr;
-        nodePtr = nullptr;
+        nodeToConnectPtr = nullptr;
     } else if(nodePtr->getLeftChildPtr() == nullptr){
-        LinkedBinaryTreeNode<ItemType>* nodeToConnectPtr = nodePtr->getRightChildPtr();
+        nodeToConnectPtr = nodePtr->getRightChildPtr();
         delete nodePtr;
-        nodePtr = nodeToConnectPtr;
     } else if(nodePtr->getRightChildPtr() == nullptr){
-        LinkedBinaryTreeNode<ItemType>* nodeToConnectPtr = nodePtr->getLeftChildPtr();
+        nodeToConnectPtr = nodePtr->getLeftChildPtr();
         delete nodePtr;
-        nodePtr = nodeToConnectPtr;
     } else{
-        LinkedBinaryTreeNode<ItemType>* inorderSuccessorPtr = removeLeftmostNode(nodePtr->getRightChildPtr(), nodePtr);
-        nodePtr->setRightChildPtr(inorderSuccessorPtr);
-        nodePtr->setItem(inorderSuccessorPtr->getItem());
+        ItemType iOS;
+        nodeToConnectPtr = removeLeftmostNode(nodePtr->getRightChildPtr(), iOS);
+        // nodePtr->setRightChildPtr(nodeToConnectPtr);
+        nodePtr->setItem(iOS);
     }
-    return nodePtr;
+    return nodeToConnectPtr;
 }
 
 template <class ItemType>
-LinkedBinaryTreeNode<ItemType>* LinkedBSearchTree<ItemType>::removeLeftmostNode(LinkedBinaryTreeNode<ItemType>* nodePtr, LinkedBinaryTreeNode<ItemType>* inorderSuccessor){
+LinkedBinaryTreeNode<ItemType>* LinkedBSearchTree<ItemType>::removeLeftmostNode(LinkedBinaryTreeNode<ItemType>* nodePtr, ItemType& inorderSuccessor){
     if(nodePtr->getLeftChildPtr() == nullptr){
         inorderSuccessor = nodePtr->getItem();
         return removeNode(nodePtr);
     } else{
-        nodePtr->setLeftChildPtr(removeLeftmostNode(nodePtr->getLeftChildPtr(), inorderSuccessor));
-        return nodePtr;
+        nodePtr->setLeftChildPtr(removeLeftmostNode(nodePtr->getLeftChildPtr(), inorderSuccessor));   
     }
+    return nodePtr;
 }
         
 template <class ItemType>
@@ -75,7 +74,7 @@ LinkedBinaryTreeNode<ItemType>* LinkedBSearchTree<ItemType>::findNode(LinkedBina
 
 
 template <class ItemType>
-LinkedBSearchTree<ItemType>::LinkedBSearchTree() : rootPtr(nullptr), height(0) { }
+LinkedBSearchTree<ItemType>::LinkedBSearchTree() : rootPtr(nullptr), height(1), numberOfNodes(0) { }
 
 template <class ItemType>
 bool LinkedBSearchTree<ItemType>::isEmpty() const{
@@ -89,6 +88,9 @@ int LinkedBSearchTree<ItemType>::getHeight() const{
 
 template <class ItemType>
 int LinkedBSearchTree<ItemType>::getNumberOfNodes() const{
+    if(rootPtr == nullptr){
+        // numberOfNodes = -1;
+    }
     return numberOfNodes;
 }
 
@@ -98,8 +100,16 @@ ItemType LinkedBSearchTree<ItemType>::getRootData() const{
 }
 
 template <class ItemType>
+LinkedBinaryTreeNode<ItemType>* LinkedBSearchTree<ItemType>::getRootPtr() const{
+    return rootPtr;
+}
+
+template <class ItemType>
 bool LinkedBSearchTree<ItemType>::add(const ItemType& newData){
-    LinkedBinaryTreeNode<ItemType>* newNodePtr(newData);
+    // std::cout << "add" << std::endl;
+    LinkedBinaryTreeNode<ItemType>* newNodePtr = new LinkedBinaryTreeNode<ItemType>(newData);
+    // LinkedBinaryTreeNode<ItemType>* newNodePtr(newData);
+    // std::cout << "beofre place node" << std::endl;
     rootPtr = placeNode(rootPtr, newNodePtr);
     numberOfNodes++;
     return true;
@@ -108,8 +118,8 @@ bool LinkedBSearchTree<ItemType>::add(const ItemType& newData){
 template <class ItemType>
 bool LinkedBSearchTree<ItemType>::remove(const ItemType& data){
     bool success = false;
-    rootPtr = removeValue(rootPtr, data, success);
-    if(success){
+    if(contains(data)){
+        rootPtr = removeValue(rootPtr, data, success);
         numberOfNodes--;
     }
     return success;
@@ -127,19 +137,22 @@ ItemType LinkedBSearchTree<ItemType>::getEntry(const ItemType& anEntry) const{
     LinkedBinaryTreeNode<ItemType>* found = findNode(rootPtr, anEntry);
     if(found != nullptr){
         return found->getItem();
-    } else{
-        throw "Item not found";
     }
+    // else{
+    //    throw "Item not found";
+    // }
+    return ItemType();
 }
         
 template <class ItemType>
 bool LinkedBSearchTree<ItemType>::contains(const ItemType& anEntry) const{
-    LinkedBinaryTreeNode<ItemType>* found = findNode(rootPtr, anEntry);
-    if(found != nullptr){
-        return true;
-    } else{
-        return false;
-    }
+    return findNode(rootPtr, anEntry) != nullptr;
+    // LinkedBinaryTreeNode<ItemType>* found = findNode(rootPtr, anEntry);
+    // if(found != nullptr){
+    //     return true;
+    // } else{
+    //     return false;
+    // }
 }
 
 template <class ItemType>
@@ -173,4 +186,9 @@ void LinkedBSearchTree<ItemType>::postorderTraverse(LinkedBinaryTreeNode<ItemTyp
         postorderTraverse(treePtr->getRightChildPtr(), visit);
     }
     visit(treePtr->getItem());
+}
+
+template <class ItemType>
+LinkedBSearchTree<ItemType>::~LinkedBSearchTree(){
+    clear();
 }

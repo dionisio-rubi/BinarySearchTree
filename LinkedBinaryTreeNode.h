@@ -10,6 +10,7 @@ class LinkedBinaryTreeNode {
     public:
         LinkedBinaryTreeNode();
         LinkedBinaryTreeNode(const ItemType& newData, LinkedBinaryTreeNode<ItemType>* left, LinkedBinaryTreeNode<ItemType>* right);
+        LinkedBinaryTreeNode(const ItemType& newData);
         void setItem(const ItemType& newData);
         ItemType getItem() const;
         bool isLeaf() const;
