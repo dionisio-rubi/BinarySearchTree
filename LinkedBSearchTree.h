@@ -18,10 +18,12 @@ class LinkedBSearchTree: public TreeInterface<ItemType> {
         LinkedBinaryTreeNode<ItemType>* removeLeftmostNode(LinkedBinaryTreeNode<ItemType>* nodePtr, ItemType& inorderSuccessor);
         LinkedBinaryTreeNode<ItemType>* findNode(LinkedBinaryTreeNode<ItemType>* treePtr, const ItemType& target) const;
 
+        int getHeight(LinkedBinaryTreeNode<ItemType>* ptr) const;
+        void postorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
     public:
         LinkedBSearchTree();
         bool isEmpty() const;
-        int getHeight() const;
+        int getHeight() const override;
         int getNumberOfNodes() const;
         ItemType getRootData() const;
         LinkedBinaryTreeNode<ItemType>* getRootPtr() const;
@@ -33,7 +35,8 @@ class LinkedBSearchTree: public TreeInterface<ItemType> {
         
         void preorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
         void inorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
-        void postorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
+        // void postorderTraverse(LinkedBinaryTreeNode<ItemType>* treePtr, void visit(ItemType&)) const;
+        void postorderTraverse(void visit(ItemType&)) const;
         ~LinkedBSearchTree();
 };
 
