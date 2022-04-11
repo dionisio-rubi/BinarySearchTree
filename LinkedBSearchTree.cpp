@@ -33,13 +33,13 @@ LinkedBinaryTreeNode<ItemType>* LinkedBSearchTree<ItemType>::removeNode(LinkedBi
     if(nodePtr->isLeaf()){
         delete nodePtr;
         nodeToConnectPtr = nullptr;
-    } else if(nodePtr->getLeftChildPtr() == nullptr){
+    } else if(nodePtr->getLeftChildPtr() == nullptr){ // can assume that there is only a right child
         nodeToConnectPtr = nodePtr->getRightChildPtr();
         delete nodePtr;
-    } else if(nodePtr->getRightChildPtr() == nullptr){
+    } else if(nodePtr->getRightChildPtr() == nullptr){ // can assume that there is only a left child
         nodeToConnectPtr = nodePtr->getLeftChildPtr();
         delete nodePtr;
-    } else{
+    } else{ // there are two children
         ItemType iOS;
         nodeToConnectPtr = removeLeftmostNode(nodePtr->getRightChildPtr(), iOS);
         nodePtr->setItem(iOS);
@@ -127,7 +127,7 @@ bool LinkedBSearchTree<ItemType>::add(const ItemType& newData){
     if(!contains(newData)){
         LinkedBinaryTreeNode<ItemType>* newNodePtr = new LinkedBinaryTreeNode<ItemType>(newData);
         rootPtr = placeNode(rootPtr, newNodePtr);
-        numberOfNodes++;
+        numberOfNodes++; // increases cout of number of nodes
         return true;
     }
     return false;
@@ -138,7 +138,7 @@ bool LinkedBSearchTree<ItemType>::remove(const ItemType& data){
     bool success = false;
     if(contains(data)){
         rootPtr = removeValue(rootPtr, data, success);
-        numberOfNodes--;
+        numberOfNodes--; // decreases count of number of nodes
     }
     return success;
 }
@@ -156,7 +156,7 @@ ItemType LinkedBSearchTree<ItemType>::getEntry(const ItemType& anEntry) const{
     if(found != nullptr){
         return found->getItem();
     }
-    return ItemType();
+    return ItemType(); // using this instead of throw exception, only runs when item is not a nullptr
 }
         
 template <class ItemType>
@@ -165,7 +165,7 @@ bool LinkedBSearchTree<ItemType>::contains(const ItemType& anEntry) const{
     if(found == nullptr){
         return false;
     }
-    return false;
+    return true;
 }
 
 template <class ItemType>
